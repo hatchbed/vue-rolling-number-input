@@ -1,12 +1,30 @@
 {
   "name": "vue-rolling-number-input",
   "version": "0.1.0",
-  "private": true,
+  "description": "A Vue number input component that allows using the mouse wheel to adjust individual digits.",
+  "author": "P. J. Reed <phillipreed@hatchbed.com>",
+  "license": "BSD-3-Clause",
+  "main": "dist/vue-rolling-number-input.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target wc --name vue-rolling-number-input src/components/RollingNumberInput.vue",
     "lint": "vue-cli-service lint"
   },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "number",
+    "numeric",
+    "input",
+    "spinner",
+    "number input",
+    "number spinner",
+    "numeric input",
+    "numeric spinner",
+    "mouse",
+    "mousewheel",
+    "wheel"
+  ],
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^2.6.14"
@@ -30,14 +48,13 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/recommended",
       "eslint:recommended",
       "@vue/typescript/recommended"
     ],
     "parserOptions": {
       "ecmaVersion": 2020
-    },
-    "rules": {}
+    }
   },
   "browserslist": [
     "> 1%",
