@@ -6,8 +6,7 @@
       :key="index"
       :value="digit"
       :class="getClass(index)"
-      @keydown="checkInput($event, index)"
-      @keyup="handleKeyUp($event, index)"
+      @keydown="handleKey($event, index)"
       @input="handleInputEvent($event, index)"
       @wheel="handleWheelEvent($event, index)"
       @click="handleClick($event)"
@@ -52,7 +51,15 @@ export default Vue.extend({
     width: {
       type: Number,
       required: true,
-    }
+    },
+    max: {
+      type: Number as () => number|undefined,
+      default: undefined
+    },
+    min: {
+      type: Number as () => number|undefined,
+      default: undefined
+    },
   },
   data() {
     return {
@@ -78,10 +85,10 @@ export default Vue.extend({
       return values
     },
     maxValue(): number {
-      return Math.pow(10, this.wholeDigits) - Math.pow(10, -this.precision)
+      return this.max ? this.max : Math.pow(10, this.wholeDigits) - Math.pow(10, -this.precision)
     },
     minValue(): number {
-      return this.allowNegative ? -this.maxValue : 0
+      return this.min ? this.min : this.allowNegative ? -this.maxValue : 0
     },
     wholeDigits(): number {
       return this.width - this.precision - (this.allowNegative ? 1 : 0) - (this.precision > 0 ? 1 : 0)
@@ -95,7 +102,6 @@ export default Vue.extend({
           this.internalValue = 0
         }
         else {
-          console.info(`${oldVal} / ${newVal}`)
           this.internalValue = newFloat
         }
       }
@@ -109,19 +115,77 @@ export default Vue.extend({
   },
   methods: {
     changeDigit(newVal: number, digit: number): boolean {
-      console.info(`Possibly changing ${digit} to: ${newVal}`)
       if (digit < 0 || digit >= this.digits.length || parseInt(this.digits[digit]) === newVal) {
         return false
       }
-      console.info(`Changing ${digit} to: ${newVal}`)
       const digitStr = this.digits.map((value, index) => index === digit ? newVal : value).join('')
       this.internalValue = parseFloat(digitStr)
       return true
     },
-    checkInput(event: KeyboardEvent, digit: number) {
-      const value = this.digits[digit]
-      if (value === '.' || value === '+' || value === '-' || isNaN(parseInt(event.key)) || digit < 0 ||
-          digit >= this.digits.length || parseInt(value) === parseInt(event.key)) {
+    changeFocus(reverse: boolean, digit: number): boolean {
+      let nextDigit = digit + (reverse ? -1 : 1)
+      if (nextDigit < this.digits.length && this.digits[nextDigit] === '.') {
+        nextDigit += reverse ? -1 : 1
+      }
+      if (this.$refs && nextDigit < this.digits.length && nextDigit >= (this.allowNegative ? 1 : 0)) {
+        const refs = this.$refs
+        const inputs = refs.inputs as HTMLInputElement[]
+        const inputEl = inputs[nextDigit]
+        inputEl.focus()
+        return true
+      }
+      return false
+    },
+    handleKey(event: KeyboardEvent, digit: number) {
+      const currentValue = this.digits[digit]
+      const value = parseInt(event.key)
+      if (currentValue === '.' || currentValue === '+' || currentValue === '-' || digit < 0 ||
+          digit >= this.digits.length || parseInt(currentValue) === value) {
+        // If the focus is on the sign or dot, or if the digit is out of bounds, or if the user typed
+        // the same number that is already in the field, we don't want to trigger an input event.
+        console.info('preventDefault')
+        event.preventDefault()
+      }
+
+      if (parseInt(currentValue) === value) {
+        // But if they typed the same number that is already in the field, they probably want to go to the next field.
+        this.changeFocus(false, digit)
+        return
+      }
+
+      if (event.key === 'ArrowUp') {
+        // If the user hits the up or down keys, change the value in the current field without changing focus.
+        this.bumpDigit(true, digit)
+        console.info('preventDefault')
+        event.preventDefault()
+        return
+      }
+      if (event.key === 'ArrowDown') {
+        this.bumpDigit(false, digit)
+        console.info('preventDefault')
+        event.preventDefault()
+        return
+      }
+
+      if (value >= 0 && value <= 9) {
+        // Otherwise, if this is a valid value, just return.  An input event will be triggered and the input
+        // will be handled there.
+        return
+      }
+
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'Tab') {
+        // At this point, we want to handle keys that the user might use to navigate between the fields, which
+        // include left, right, and tab; ignore any other key.
+        if (isNaN(value)) {
+          // Furthermore, prevent any non-navigational keys from doing anything
+          event.preventDefault()
+        }
+        return
+      }
+
+      const reverse = event.key === 'ArrowLeft' || (event.shiftKey && event.key === 'Tab')
+      if (this.changeFocus(reverse, digit)) {
+        console.info('preventDefault')
         event.preventDefault()
       }
     },
@@ -144,45 +208,38 @@ export default Vue.extend({
     handleInputEvent(event: InputEvent, digit: number) {
       if (event.data) {
         if (!this.changeDigit(parseInt(event.data), digit)) {
+          console.info('preventDefault')
           event.preventDefault()
+        }
+        else {
+          this.changeFocus(false, digit)
         }
       }
     },
-    handleKeyUp(event: KeyboardEvent, digit: number) {
-      const value = parseInt(event.key)
-      if (event.key !== 'Tab' && !(value >= 0 && value <= 9)) {
-        event.preventDefault()
-        return
-      }
-
-      const reverse = event.shiftKey && event.key === 'Tab'
-      let nextDigit = digit + (reverse ? -1 : 1)
-      if (nextDigit < this.digits.length && this.digits[nextDigit] === '.') {
-        nextDigit += reverse ? -1 : 1
-      }
-      if (this.$refs && nextDigit < this.digits.length && nextDigit >= (this.allowNegative ? 1 : 0)) {
-        const refs = this.$refs
-        const inputs = refs.inputs as HTMLInputElement[]
-        const inputEl = inputs[nextDigit]
-        inputEl.focus()
-      }
-    },
     handleWheelEvent(event: WheelEvent, digit: number) {
-      const precisionOffset = this.width - this.precision
       if ((this.allowNegative && digit === 0) || (this.precision > 0 && digit === this.width - this.precision - 1)) {
+        console.info('preventDefault')
         event.preventDefault()
         return
       }
-
-      const place = Math.pow(10, precisionOffset - digit - ((digit >= precisionOffset) ? 1 : 2) - (this.precision === 0 ? -1 : 0))
 
       if (event.deltaY < 0) {
-        this.internalValue += place
+        this.bumpDigit(true, digit)
       } else if (event.deltaY > 0) {
+        this.bumpDigit(false, digit)
+      }
+    },
+    bumpDigit(positive: boolean, digit: number) {
+      const precisionOffset = this.width - this.precision
+      const place = Math.pow(10, precisionOffset - digit - ((digit >= precisionOffset) ? 1 : 2) - (this.precision === 0 ? -1 : 0))
+
+      if (positive) {
+        this.internalValue += place
+      } else {
         this.internalValue -= place
       }
       this.internalValue = Math.max(this.minValue, Math.min(this.internalValue, this.maxValue))
-    },
+    }
   }
 })
 </script>

@@ -6,16 +6,26 @@
     >
     <h1>Rolling Number Input Example</h1>
 
-    <div>Current Value: {{ value }}</div>
-
     <p>Spin your mouse wheel over individual digits to change them!</p>
 
     <div>
+      <p>Current Value: {{ value }}</p>
       <RollingNumberInput
         v-model="value"
         :width="8"
         :allow-negative="true"
         :precision="3"
+      />
+    </div>
+
+    <div>
+      <p>Current Value: {{ value2 }}</p>
+      <RollingNumberInput
+        v-model="value2"
+        :width="8"
+        :precision="0"
+        :min="10"
+        :max="20000000"
       />
     </div>
   </div>
@@ -30,7 +40,8 @@ export default Vue.extend({
   components: {RollingNumberInput},
   data() {
     return {
-      value: 50
+      value: 50,
+      value2: 50,
     }
   }
 });
