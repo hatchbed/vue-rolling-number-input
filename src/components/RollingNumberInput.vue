@@ -266,6 +266,7 @@ export default Vue.extend({
 }
 /*noinspection CssUnusedSymbol*/
 .rolling-number-input-left {
+  border-left: 1px solid black;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   border-bottom-left-radius: 5px;
