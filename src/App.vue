@@ -8,25 +8,34 @@
 
     <p>Spin your mouse wheel over individual digits to change them!</p>
 
-    <div>
-      <p>Current Value: {{ value }}</p>
-      <RollingNumberInput
-        v-model="value"
-        :width="8"
-        :allow-negative="true"
-        :precision="3"
-      />
-    </div>
-
-    <div>
-      <p>Current Value: {{ value2 }}</p>
-      <RollingNumberInput
-        v-model="value2"
-        :width="8"
-        :precision="0"
-        :min="10"
-        :max="20000000"
-      />
+    <div style="display: flex; flex-direction: column; align-items: center">
+      <div style="padding: 1em; border: 1px solid black;">
+        <p>Current Value: {{ value }}</p>
+        <RollingNumberInput
+          v-model="value"
+          :width="8"
+          :allow-negative="true"
+          :precision="3"
+        />
+      </div>
+      <br>
+      <div style="padding: 1em; border: 1px solid black;">
+        <p>Current Value: {{ value2 }}</p>
+        <form @submit="handleSubmit">
+          <label>Form Input: </label>
+          <RollingNumberInput
+            v-model="value2"
+            :width="8"
+            :precision="0"
+            :min="10"
+            :max="20000000"
+            name="example"
+          />
+          <br>
+          <input type="submit">
+        </form>
+        <p>Submitted value: {{ submittedValue }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +51,18 @@ export default Vue.extend({
     return {
       value: 50,
       value2: 50,
+      submittedValue: '',
+    }
+  },
+  methods: {
+    handleSubmit(e: SubmitEvent) {
+      e.preventDefault()
+      if (e.target && e.target instanceof HTMLFormElement) {
+        const data = new FormData(e.target)
+        if (data.has('example')) {
+          this.submittedValue = String(data.get('example'))
+        }
+      }
     }
   }
 });

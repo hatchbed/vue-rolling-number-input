@@ -1,5 +1,6 @@
 <template>
   <span>
+    <!-- Every digit and symbol in the value gets broken up into its own input element -->
     <input
       v-for="(digit, index) in digits"
       ref="inputs"
@@ -10,6 +11,12 @@
       @input="handleInputEvent($event, index)"
       @wheel="handleWheelEvent($event, index)"
       @click="handleClick($event)"
+    >
+    <!-- Create a hidden, named input element that is set to the real value so it can be submitted with forms -->
+    <input
+      type="hidden"
+      :name="name"
+      :value="'' + internalValue"
     >
   </span>
 </template>
@@ -39,6 +46,10 @@ export default Vue.extend({
     rightClass: {
       type: String,
       default: 'rolling-number-input-right',
+    },
+    name: {
+      type: String,
+      default: ''
     },
     value: {
       type: Number,
@@ -110,6 +121,7 @@ export default Vue.extend({
       const newFloat = parseFloat(newVal)
       if (newFloat !== oldVal) {
         this.$emit('input', newFloat)
+        this.$emit('change', newFloat)
       }
     },
   },

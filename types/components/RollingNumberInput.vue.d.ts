@@ -21,6 +21,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue<Record<string, a
     digitClass: string;
     leftClass: string;
     rightClass: string;
+    name: string;
     value: number;
     precision: number;
     width: number;
