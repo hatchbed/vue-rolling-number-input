@@ -63,7 +63,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=template&id=6ea009da&scoped=true&
+;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=template&id=06c192e5&scoped=true&
 var render = function render() {
   var _vm = this,
       _c = _vm._self._c,
@@ -259,7 +259,6 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
       if (currentValue === '.' || currentValue === '+' || currentValue === '-' || digit < 0 || digit >= this.digits.length || parseInt(currentValue) === value) {
         // If the focus is on the sign or dot, or if the digit is out of bounds, or if the user typed
         // the same number that is already in the field, we don't want to trigger an input event.
-        console.info('preventDefault');
         event.preventDefault();
       }
 
@@ -272,14 +271,12 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
       if (event.key === 'ArrowUp') {
         // If the user hits the up or down keys, change the value in the current field without changing focus.
         await this.bumpDigit(true, digit);
-        console.info('preventDefault');
         event.preventDefault();
         return;
       }
 
       if (event.key === 'ArrowDown') {
         await this.bumpDigit(false, digit);
-        console.info('preventDefault');
         event.preventDefault();
         return;
       }
@@ -304,7 +301,6 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
       const reverse = event.key === 'ArrowLeft' || event.shiftKey && event.key === 'Tab';
 
       if (await this.changeFocus(reverse, digit)) {
-        console.info('preventDefault');
         event.preventDefault();
       }
     },
@@ -328,7 +324,6 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
     async handleInputEvent(event, digit) {
       if (event.data) {
         if (!(await this.changeDigit(parseInt(event.data), digit))) {
-          console.info('preventDefault');
           event.preventDefault();
         } else {
           await this.changeFocus(false, digit);
@@ -338,7 +333,6 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 
     async handleWheelEvent(event, digit) {
       if (this.allowNegative && digit === 0 || this.precision > 0 && digit === this.width - this.precision - 1) {
-        console.info('preventDefault');
         event.preventDefault();
         return;
       }
@@ -367,10 +361,10 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 }));
 ;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=script&lang=ts&
  /* harmony default export */ var components_RollingNumberInputvue_type_script_lang_ts_ = (RollingNumberInputvue_type_script_lang_ts_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=6ea009da&prod&scoped=true&lang=css&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=06c192e5&prod&scoped=true&lang=css&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=6ea009da&prod&scoped=true&lang=css&
+;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=06c192e5&prod&scoped=true&lang=css&
 
 ;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -485,7 +479,7 @@ var component = normalizeComponent(
   staticRenderFns,
   false,
   null,
-  "6ea009da",
+  "06c192e5",
   null
   
 )

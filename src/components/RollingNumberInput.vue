@@ -155,7 +155,6 @@ export default Vue.extend({
           digit >= this.digits.length || parseInt(currentValue) === value) {
         // If the focus is on the sign or dot, or if the digit is out of bounds, or if the user typed
         // the same number that is already in the field, we don't want to trigger an input event.
-        console.info('preventDefault')
         event.preventDefault()
       }
 
@@ -168,13 +167,11 @@ export default Vue.extend({
       if (event.key === 'ArrowUp') {
         // If the user hits the up or down keys, change the value in the current field without changing focus.
         await this.bumpDigit(true, digit)
-        console.info('preventDefault')
         event.preventDefault()
         return
       }
       if (event.key === 'ArrowDown') {
         await this.bumpDigit(false, digit)
-        console.info('preventDefault')
         event.preventDefault()
         return
       }
@@ -197,7 +194,6 @@ export default Vue.extend({
 
       const reverse = event.key === 'ArrowLeft' || (event.shiftKey && event.key === 'Tab')
       if (await this.changeFocus(reverse, digit)) {
-        console.info('preventDefault')
         event.preventDefault()
       }
     },
@@ -220,7 +216,6 @@ export default Vue.extend({
     async handleInputEvent(event: InputEvent, digit: number) {
       if (event.data) {
         if (!await this.changeDigit(parseInt(event.data), digit)) {
-          console.info('preventDefault')
           event.preventDefault()
         }
         else {
@@ -230,7 +225,6 @@ export default Vue.extend({
     },
     async handleWheelEvent(event: WheelEvent, digit: number) {
       if ((this.allowNegative && digit === 0) || (this.precision > 0 && digit === this.width - this.precision - 1)) {
-        console.info('preventDefault')
         event.preventDefault()
         return
       }
