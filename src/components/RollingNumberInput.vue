@@ -126,7 +126,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    changeDigit(newVal: number, digit: number): boolean {
+    async changeDigit(newVal: number, digit: number): Promise<boolean> {
       if (digit < 0 || digit >= this.digits.length || parseInt(this.digits[digit]) === newVal) {
         return false
       }
@@ -134,7 +134,7 @@ export default Vue.extend({
       this.internalValue = parseFloat(digitStr)
       return true
     },
-    changeFocus(reverse: boolean, digit: number): boolean {
+    async changeFocus(reverse: boolean, digit: number): Promise<boolean> {
       let nextDigit = digit + (reverse ? -1 : 1)
       if (nextDigit < this.digits.length && this.digits[nextDigit] === '.') {
         nextDigit += reverse ? -1 : 1
@@ -148,7 +148,7 @@ export default Vue.extend({
       }
       return false
     },
-    handleKey(event: KeyboardEvent, digit: number) {
+    async handleKey(event: KeyboardEvent, digit: number) {
       const currentValue = this.digits[digit]
       const value = parseInt(event.key)
       if (currentValue === '.' || currentValue === '+' || currentValue === '-' || digit < 0 ||
@@ -161,19 +161,19 @@ export default Vue.extend({
 
       if (parseInt(currentValue) === value) {
         // But if they typed the same number that is already in the field, they probably want to go to the next field.
-        this.changeFocus(false, digit)
+        await this.changeFocus(false, digit)
         return
       }
 
       if (event.key === 'ArrowUp') {
         // If the user hits the up or down keys, change the value in the current field without changing focus.
-        this.bumpDigit(true, digit)
+        await this.bumpDigit(true, digit)
         console.info('preventDefault')
         event.preventDefault()
         return
       }
       if (event.key === 'ArrowDown') {
-        this.bumpDigit(false, digit)
+        await this.bumpDigit(false, digit)
         console.info('preventDefault')
         event.preventDefault()
         return
@@ -196,7 +196,7 @@ export default Vue.extend({
       }
 
       const reverse = event.key === 'ArrowLeft' || (event.shiftKey && event.key === 'Tab')
-      if (this.changeFocus(reverse, digit)) {
+      if (await this.changeFocus(reverse, digit)) {
         console.info('preventDefault')
         event.preventDefault()
       }
@@ -212,23 +212,23 @@ export default Vue.extend({
         return `${this.digitClass} ${this.centerClass}`
       }
     },
-    handleClick(event: MouseEvent) {
+    async handleClick(event: MouseEvent) {
       if (event.currentTarget instanceof HTMLInputElement) {
         event.currentTarget.select()
       }
     },
-    handleInputEvent(event: InputEvent, digit: number) {
+    async handleInputEvent(event: InputEvent, digit: number) {
       if (event.data) {
-        if (!this.changeDigit(parseInt(event.data), digit)) {
+        if (!await this.changeDigit(parseInt(event.data), digit)) {
           console.info('preventDefault')
           event.preventDefault()
         }
         else {
-          this.changeFocus(false, digit)
+          await this.changeFocus(false, digit)
         }
       }
     },
-    handleWheelEvent(event: WheelEvent, digit: number) {
+    async handleWheelEvent(event: WheelEvent, digit: number) {
       if ((this.allowNegative && digit === 0) || (this.precision > 0 && digit === this.width - this.precision - 1)) {
         console.info('preventDefault')
         event.preventDefault()
@@ -236,12 +236,12 @@ export default Vue.extend({
       }
 
       if (event.deltaY < 0) {
-        this.bumpDigit(true, digit)
+        await this.bumpDigit(true, digit)
       } else if (event.deltaY > 0) {
-        this.bumpDigit(false, digit)
+        await this.bumpDigit(false, digit)
       }
     },
-    bumpDigit(positive: boolean, digit: number) {
+    async bumpDigit(positive: boolean, digit: number) {
       const precisionOffset = this.width - this.precision
       const place = Math.pow(10, precisionOffset - digit - ((digit >= precisionOffset) ? 1 : 2) - (this.precision === 0 ? -1 : 0))
 
