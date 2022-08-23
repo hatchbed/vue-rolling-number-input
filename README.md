@@ -25,6 +25,8 @@ change what degree of precision they are modifying.
 
 ## Demo
 
+https://hatchbed.github.io/vue-rolling-number-input/
+
 ## Installation
 
 Install the package through NPM:
