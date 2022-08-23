@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="rolling-number-input-grid">
     <!-- Every digit and symbol in the value gets broken up into its own input element -->
     <input
       v-for="(digit, index) in digits"
@@ -13,11 +13,13 @@
       @click="handleClick($event)"
     >
     <!-- Create a hidden, named input element that is set to the real value so it can be submitted with forms -->
-    <input
-      type="hidden"
-      :name="name"
-      :value="'' + internalValue"
-    >
+    <span>
+      <input
+        type="hidden"
+        :name="name"
+        :value="'' + internalValue"
+      >
+    </span>
   </span>
 </template>
 
@@ -268,6 +270,45 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.rolling-number-input-grid {
+  position: relative;
+  display: inline-grid;
+  column-gap: 0;
+  border-radius: 5px;
+  box-sizing: content-box;
+  /*width: 100%;*/
+}
+.rolling-number-input-grid > input {
+  grid-row: 1;
+  border: none;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  outline: none;
+}
+.rolling-number-input-grid > input:hover {
+  border: 4px #1867c0 solid;
+  margin: -3px -3px -4px -4px;
+  z-index: 10;
+  border-radius: 5px;
+}
+.rolling-number-input-grid > input:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-left: 1px solid black;
+}
+.rolling-number-input-grid > input:first-of-type:hover {
+  border-left: 4px #1867c0 solid;
+  margin-left: -3px !important;
+}
+.rolling-number-input-grid > input:last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.rolling-number-input-grid > input:last-of-type:hover {
+  margin-right: -3px !important;
+  margin-left: -4px !important;
+}
 /*noinspection CssUnusedSymbol*/
 .rolling-number-input-single {
   border: 1px solid black;
@@ -275,29 +316,13 @@ export default Vue.extend({
 }
 /*noinspection CssUnusedSymbol*/
 .rolling-number-input-left-two-digits {
-  margin-right: -1px;
+  border-right: 1px solid black !important;
+  /*margin-right: -1px;*/
 }
 /*noinspection CssUnusedSymbol*/
 .rolling-number-input-left-two-digits:hover {
-  margin-right: -4px;
-}
-/*noinspection CssUnusedSymbol*/
-.rolling-number-input-center {
-  border: 1px solid black;
-  margin-left: -1px;
-  margin-right: -1px;
-}
-/*noinspection CssUnusedSymbol*/
-.rolling-number-input-left {
-  border: 1px solid black;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-}
-/*noinspection CssUnusedSymbol*/
-.rolling-number-input-right {
-  border: 1px solid black;
-  border-bottom-right-radius: 5px;
-  border-top-right-radius: 5px;
+  margin-right: -3px;
+  border-right: 4px #1867c0 solid !important;
 }
 /*noinspection CssUnusedSymbol*/
 .rolling-number-input-digit {
@@ -315,12 +340,5 @@ export default Vue.extend({
 .rolling-number-input-right:hover {
   margin-left: -3px !important;
   margin-right: -3px !important;
-}
-/*noinspection CssUnusedSymbol*/
-.rolling-number-input-digit:hover {
-  border: 4px #1867c0 solid;
-  margin: -4px;
-  z-index: 10;
-  border-radius: 5px;
 }
 </style>
