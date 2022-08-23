@@ -10,6 +10,7 @@ declare const _default: import("vue/types/vue").ExtendedVue<Vue<Record<string, a
     handleInputEvent(event: InputEvent, digit: number): Promise<void>;
     handleWheelEvent(event: WheelEvent, digit: number): Promise<void>;
     bumpDigit(positive: boolean, digit: number): Promise<void>;
+    round(value: number, decimals: number): Promise<number>;
 }, {
     digits: string[];
     maxValue: number;

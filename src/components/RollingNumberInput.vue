@@ -258,7 +258,10 @@ export default Vue.extend({
       } else {
         this.internalValue -= place
       }
-      this.internalValue = Math.max(this.minValue, Math.min(this.internalValue, this.maxValue))
+      this.internalValue = await this.round(Math.max(this.minValue, Math.min(this.internalValue, this.maxValue)), this.precision)
+    },
+    async round(value: number, decimals: number) {
+      return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals);
     }
   }
 })
