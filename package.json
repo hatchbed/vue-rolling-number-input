@@ -3,6 +3,8 @@
   "version": "0.3.1",
   "description": "A Vue number input component that allows using the mouse wheel to adjust individual digits.",
   "author": "P. J. Reed <phillipreed@hatchbed.com>",
+  "homepage": "https://github.com/hatchbed/vue-rolling-number-input",
+  "bugs": "https://github.com/hatchbed/vue-rolling-number-input/issues",
   "license": "BSD-3-Clause",
   "main": "dist/vue-rolling-number-input.umd.js",
   "unpkg": "dist/vue-rolling-number-input.umd.min.js",

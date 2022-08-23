@@ -63,7 +63,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=template&id=06c192e5&scoped=true&
+;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=template&id=876bc974&scoped=true&
 var render = function render() {
   var _vm = this,
       _c = _vm._self._c,
@@ -168,6 +168,11 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 
   computed: {
     digits() {
+      if (this.precision < 0 || this.width < 1) {
+        // These are invalid values, so just return an empty array
+        return [];
+      }
+
       const valueStr = Math.abs(this.internalValue).toFixed(this.precision);
       const values = new Array(this.width).fill("0");
       const offset = this.width - valueStr.length;
@@ -188,14 +193,17 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
     },
 
     maxValue() {
+      // If no max is explicitly set, set it to the largest value that can fit into our number of digits
       return this.max ? this.max : Math.pow(10, this.wholeDigits) - Math.pow(10, -this.precision);
     },
 
     minValue() {
+      // If no min value is explicitly set, it is 0 if negative numbers are not allowed; otherwise, the inverse of the max
       return this.min ? this.min : this.allowNegative ? -this.maxValue : 0;
     },
 
     wholeDigits() {
+      // Count the number of digits we have for actually representing numbers
       return this.width - this.precision - (this.allowNegative ? 1 : 0) - (this.precision > 0 ? 1 : 0);
     }
 
@@ -307,7 +315,17 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 
     getClass(digit) {
       if (digit === 0) {
-        return `${this.digitClass} ${this.leftClass}`;
+        let base = `${this.digitClass} ${this.leftClass}`;
+
+        if (this.width === 1) {
+          base += ' rolling-number-input-single';
+        }
+
+        if (this.width === 2) {
+          base += ' rolling-number-input-left-two-digits';
+        }
+
+        return base;
       } else if (digit === this.width - 1) {
         return `${this.digitClass} ${this.rightClass}`;
       } else {
@@ -361,10 +379,10 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 }));
 ;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=script&lang=ts&
  /* harmony default export */ var components_RollingNumberInputvue_type_script_lang_ts_ = (RollingNumberInputvue_type_script_lang_ts_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=06c192e5&prod&scoped=true&lang=css&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-12.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=876bc974&prod&scoped=true&lang=css&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=06c192e5&prod&scoped=true&lang=css&
+;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=876bc974&prod&scoped=true&lang=css&
 
 ;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -479,7 +497,7 @@ var component = normalizeComponent(
   staticRenderFns,
   false,
   null,
-  "06c192e5",
+  "876bc974",
   null
   
 )
