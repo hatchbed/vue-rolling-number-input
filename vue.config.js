@@ -25,5 +25,6 @@ const fixEmitDeclarationFilesForTypeScript = {
 };
 module.exports = defineConfig({
   ...fixEmitDeclarationFilesForTypeScript,
+  publicPath: process.env.NODE_ENV === 'production' ? '././' : './',
   transpileDependencies: true
 })
