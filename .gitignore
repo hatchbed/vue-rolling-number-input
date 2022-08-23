@@ -2,6 +2,7 @@
 node_modules
 /dist/*
 !/dist/vue-rolling-number-input.*
+types/App.vue.d.ts
 
 
 # local env files
