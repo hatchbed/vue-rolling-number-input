@@ -9,32 +9,60 @@
     <p>Spin your mouse wheel over individual digits to change them!</p>
 
     <div style="display: flex; flex-direction: column; align-items: center">
-      <div style="padding: 1em; border: 1px solid black;">
+      <div style="padding: 1em; border: 1px solid black; display: flex; flex-direction: column;">
         <p>Current Value: {{ value }}</p>
-        <RollingNumberInput
-          v-model="value"
-          :width="8"
-          :allow-negative="true"
-          :precision="3"
-        />
-      </div>
-      <br>
-      <div style="padding: 1em; border: 1px solid black;">
-        <p>Current Value: {{ value2 }}</p>
-        <form @submit="handleSubmit">
-          <label>Form Input: </label>
-          <RollingNumberInput
-            v-model="value2"
-            :width="8"
-            :precision="0"
-            :min="10"
-            :max="20000000"
-            name="example"
-          />
-          <br>
-          <input type="submit">
-        </form>
-        <p>Submitted value: {{ submittedValue }}</p>
+        <div style="padding: 1em; display: flex; flex-direction: row;">
+          <div style="margin-right: 20px; text-align: right">
+            <form>
+              <label>Allow Negative</label>
+              <input
+                v-model="allowNegative"
+                type="checkbox"
+              >
+              <br>
+              <label>Minimum: </label>
+              <input
+                v-model="min"
+                type="number"
+              >
+              <br>
+              <label>Maximum: </label>
+              <input
+                v-model="max"
+                type="number"
+              >
+              <br>
+              <label>Precision: </label>
+              <input
+                v-model="precision"
+                type="number"
+              >
+              <br>
+              <label>Width: </label>
+              <input
+                v-model="width"
+                type="number"
+              >
+            </form>
+          </div>
+          <div>
+            <form @submit="handleSubmit">
+              <label>Form Input: </label><br>
+              <RollingNumberInput
+                v-model="value"
+                :allow-negative="allowNegative"
+                :width="parseInt(width)"
+                :precision="parseInt(precision)"
+                :min="parseInt(min)"
+                :max="parseInt(max)"
+                name="example"
+              />
+              <br><br>
+              <input type="submit">
+            </form>
+            <p>Submitted value: {{ submittedValue }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,8 +78,12 @@ export default Vue.extend({
   data() {
     return {
       value: 50,
-      value2: 50,
       submittedValue: '',
+      allowNegative: false,
+      precision: "3",
+      width: "8",
+      min: "10",
+      max: "1000",
     }
   },
   methods: {

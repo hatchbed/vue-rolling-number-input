@@ -79,6 +79,10 @@ export default Vue.extend({
   },
   computed: {
     digits(): string[] {
+      if (this.precision < 0 || this.width < 1) {
+        // These are invalid values, so just return an empty array
+        return []
+      }
       const valueStr = Math.abs(this.internalValue).toFixed(this.precision)
       const values = new Array(this.width).fill("0")
       const offset = this.width - valueStr.length
@@ -96,12 +100,15 @@ export default Vue.extend({
       return values
     },
     maxValue(): number {
+      // If no max is explicitly set, set it to the largest value that can fit into our number of digits
       return this.max ? this.max : Math.pow(10, this.wholeDigits) - Math.pow(10, -this.precision)
     },
     minValue(): number {
+      // If no min value is explicitly set, it is 0 if negative numbers are not allowed; otherwise, the inverse of the max
       return this.min ? this.min : this.allowNegative ? -this.maxValue : 0
     },
     wholeDigits(): number {
+      // Count the number of digits we have for actually representing numbers
       return this.width - this.precision - (this.allowNegative ? 1 : 0) - (this.precision > 0 ? 1 : 0)
     }
   },
@@ -199,7 +206,14 @@ export default Vue.extend({
     },
     getClass(digit: number) {
       if (digit === 0) {
-        return `${this.digitClass} ${this.leftClass}`
+        let base = `${this.digitClass} ${this.leftClass}`
+        if (this.width === 1) {
+          base += ' rolling-number-input-single'
+        }
+        if (this.width === 2) {
+          base += ' rolling-number-input-left-two-digits'
+        }
+        return base
       }
       else if (digit === this.width - 1) {
         return `${this.digitClass} ${this.rightClass}`
@@ -252,27 +266,33 @@ export default Vue.extend({
 
 <style scoped>
 /*noinspection CssUnusedSymbol*/
+.rolling-number-input-single {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+/*noinspection CssUnusedSymbol*/
+.rolling-number-input-left-two-digits {
+  margin-right: -1px;
+}
+/*noinspection CssUnusedSymbol*/
+.rolling-number-input-left-two-digits:hover {
+  margin-right: -4px;
+}
+/*noinspection CssUnusedSymbol*/
 .rolling-number-input-center {
-  border-left: 1px solid black;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-right: none;
+  border: 1px solid black;
+  margin-left: -1px;
+  margin-right: -1px;
 }
 /*noinspection CssUnusedSymbol*/
 .rolling-number-input-left {
-  border-left: 1px solid black;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border: 1px solid black;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
-  border-right: none;
 }
 /*noinspection CssUnusedSymbol*/
 .rolling-number-input-right {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border: 1px solid black;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -281,5 +301,23 @@ export default Vue.extend({
   text-align: center;
   font-family: monospace;
   width: 1em;
+  position: relative;
+}
+/*noinspection CssUnusedSymbol*/
+.rolling-number-input-left:hover {
+  margin-left: -3px !important;
+  margin-right: -3px !important;
+}
+/*noinspection CssUnusedSymbol*/
+.rolling-number-input-right:hover {
+  margin-left: -3px !important;
+  margin-right: -3px !important;
+}
+/*noinspection CssUnusedSymbol*/
+.rolling-number-input-digit:hover {
+  border: 4px #1867c0 solid;
+  margin: -4px;
+  z-index: 10;
+  border-radius: 5px;
 }
 </style>
