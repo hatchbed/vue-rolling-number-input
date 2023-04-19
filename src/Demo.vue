@@ -10,37 +10,37 @@
 
     <div style="display: flex; flex-direction: column; align-items: center">
       <div style="padding: 1em; border: 1px solid black; display: flex; flex-direction: column;">
-        <p>Current Value: {{ value }}</p>
+        <p>Current Value: {{ state.value }}</p>
         <div style="padding: 1em; display: flex; flex-direction: row;">
           <div style="margin-right: 20px; text-align: right">
             <form>
               <label>Allow Negative</label>
               <input
-                v-model="allowNegative"
+                v-model="state.allowNegative"
                 type="checkbox"
               >
               <br>
               <label>Minimum: </label>
               <input
-                v-model="min"
+                v-model="state.min"
                 type="number"
               >
               <br>
               <label>Maximum: </label>
               <input
-                v-model="max"
+                v-model="state.max"
                 type="number"
               >
               <br>
               <label>Precision: </label>
               <input
-                v-model="precision"
+                v-model="state.precision"
                 type="number"
               >
               <br>
               <label>Width: </label>
               <input
-                v-model="width"
+                v-model="state.width"
                 type="number"
               >
             </form>
@@ -49,18 +49,18 @@
             <form @submit="handleSubmit">
               <label>Form Input: </label><br>
               <RollingNumberInput
-                v-model="value"
-                :allow-negative="allowNegative"
-                :width="parseInt(width)"
-                :precision="parseInt(precision)"
-                :min="parseInt(min)"
-                :max="parseInt(max)"
+                v-model="state.value"
+                :allow-negative="state.allowNegative"
+                :width="parseInt(state.width)"
+                :precision="parseInt(state.precision)"
+                :min="parseInt(state.min)"
+                :max="parseInt(state.max)"
                 name="example"
               />
               <br><br>
               <input type="submit">
             </form>
-            <p>Submitted value: {{ submittedValue }}</p>
+            <p>Submitted value: {{ state.submittedValue }}</p>
           </div>
         </div>
       </div>
@@ -68,36 +68,30 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import RollingNumberInput from "@/components/RollingNumberInput.vue";
+<script setup lang="ts">
 
-export default Vue.extend({
-  name: 'App',
-  components: {RollingNumberInput},
-  data() {
-    return {
-      value: 50,
-      submittedValue: '',
-      allowNegative: false,
-      precision: "3",
-      width: "8",
-      min: "10",
-      max: "1000",
-    }
-  },
-  methods: {
-    handleSubmit(e: SubmitEvent) {
-      e.preventDefault()
-      if (e.target && e.target instanceof HTMLFormElement) {
-        const data = new FormData(e.target)
-        if (data.has('example')) {
-          this.submittedValue = String(data.get('example'))
-        }
-      }
+import {reactive} from "vue";
+import RollingNumberInput from "./components/RollingNumberInput.vue";
+
+const state = reactive({
+    value: 50,
+    submittedValue: '',
+    allowNegative: false,
+    precision: "3",
+    width: "8",
+    min: "10",
+    max: "1000",
+})
+
+const handleSubmit = (e: SubmitEvent) => {
+  e.preventDefault()
+  if (e.target && e.target instanceof HTMLFormElement) {
+    const data = new FormData(e.target)
+    if (data.has('example')) {
+      state.submittedValue = String(data.get('example'))
     }
   }
-});
+}
 </script>
 
 <style>

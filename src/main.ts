@@ -1,8 +1,7 @@
-import Vue from 'vue'
-import App from './App.vue'
+import RollingNumberInput from "./components/RollingNumberInput.vue";
+import Demo from "./Demo.vue";
 
-Vue.config.productionTip = false
-
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+export {
+    Demo,
+    RollingNumberInput
+}

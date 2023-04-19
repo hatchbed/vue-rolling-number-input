@@ -1,4 +1,4 @@
-# vue-rolling-number-input
+# vue3-rolling-number-input
 
 `RollingNumberInput` is a Vue component that provides a number input field with digits that can be quickly
 individually adjusted using a mouse wheel or arrow keys on a keyboard.  It is ideal for situations such as
@@ -38,7 +38,7 @@ Import it into your project:
 
 ```javascript
 import RollingNumberInput from 'vue-rolling-number-input'
-import 'vue-rolling-number-input/dist/vue-rolling-number-input.css'
+import 'vue3-rolling-number-input/dist/vue-rolling-number-input.css'
 
 export default {
   components: {
