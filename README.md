@@ -1,5 +1,7 @@
 # vue3-rolling-number-input
 
+This branch contains a version of the RollingNumberInput that supports Vue 3.
+
 `RollingNumberInput` is a Vue component that provides a number input field with digits that can be quickly
 individually adjusted using a mouse wheel or arrow keys on a keyboard.  It is ideal for situations such as
 inputting radio frequencies or distances where users may want to spin through values and need to dynamically
@@ -31,14 +33,14 @@ https://hatchbed.github.io/vue-rolling-number-input/
 
 Install the package through NPM:
 ```bash
-npm install vue-rolling-number-input
+npm install vue3-rolling-number-input
 ```
 
 Import it into your project:
 
 ```javascript
-import RollingNumberInput from 'vue-rolling-number-input'
-import 'vue3-rolling-number-input/dist/vue-rolling-number-input.css'
+import RollingNumberInput from 'vue3-rolling-number-input'
+import 'vue3-rolling-number-input/dist/style.css'
 
 export default {
   components: {

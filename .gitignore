@@ -1,7 +1,10 @@
 .DS_Store
 node_modules
 /dist/*
-!/dist/vue-rolling-number-input.*
+!/dist/vue3-rolling-number-input.*
+!/dist/style.css
+!/dist/*.d.ts
+!/dist/components/*.d.ts
 types/App.vue.d.ts
 
 

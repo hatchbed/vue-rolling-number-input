@@ -1,9 +1,10 @@
 // vite.config.js
 
-const fs = require('fs')
+import fs from 'fs'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-const vue = require('@vitejs/plugin-vue');
+import vue from '@vitejs/plugin-vue'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
@@ -12,7 +13,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/main.ts'),
       name: 'VueRollingNumberInput',
       // the proper extensions will be added
-      fileName: 'vue-rolling-number-input',
+      fileName: 'vue3-rolling-number-input',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
@@ -43,6 +44,9 @@ export default defineConfig({
       }
     },
     // Vite Vue SFC plugin
-    vue()
+    vue(),
+    dts({
+      insertTypesEntry: true,
+    })
   ]
 })
