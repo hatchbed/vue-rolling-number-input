@@ -165,11 +165,17 @@ export default Vue.extend({
       // cursor is.
       if (event.key === '-' && this.allowNegative) {
           this.internalValue = - Math.abs(this.internalValue)
+          if (this.min) {
+              this.internalValue = Math.max(this.min, this.internalValue)
+          }
           event.preventDefault()
           return
       }
       else if (event.key === '+') {
           this.internalValue = Math.abs(this.internalValue)
+          if (this.max) {
+              this.internalValue = Math.min(this.max, this.internalValue)
+          }
           event.preventDefault()
           return
       }
