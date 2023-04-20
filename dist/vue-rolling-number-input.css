@@ -1,5 +1,5 @@
 
-.rolling-number-input-grid[data-v-2c692834] {
+.rolling-number-input-grid[data-v-5dedf855] {
   position: relative;
   display: inline-grid;
   -moz-column-gap: 0;
@@ -8,7 +8,7 @@
   box-sizing: content-box;
   /*width: 100%;*/
 }
-.rolling-number-input-grid > input[data-v-2c692834] {
+.rolling-number-input-grid > input[data-v-5dedf855] {
   grid-row: 1;
   border: none;
   border-right: 1px solid black;
@@ -16,58 +16,58 @@
   border-bottom: 1px solid black;
   outline: none;
 }
-.rolling-number-input-grid > input[data-v-2c692834]:hover {
+.rolling-number-input-grid > input[data-v-5dedf855]:hover {
   border: 4px #1867c0 solid;
   margin: -3px -3px -4px -4px;
   z-index: 10;
   border-radius: 5px;
 }
-.rolling-number-input-grid > input[data-v-2c692834]:first-of-type {
+.rolling-number-input-grid > input[data-v-5dedf855]:first-of-type {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-left: 1px solid black;
 }
-.rolling-number-input-grid > input[data-v-2c692834]:first-of-type:hover {
+.rolling-number-input-grid > input[data-v-5dedf855]:first-of-type:hover {
   border-left: 4px #1867c0 solid;
   margin-left: -3px !important;
 }
-.rolling-number-input-grid > input[data-v-2c692834]:last-of-type {
+.rolling-number-input-grid > input[data-v-5dedf855]:last-of-type {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.rolling-number-input-grid > input[data-v-2c692834]:last-of-type:hover {
+.rolling-number-input-grid > input[data-v-5dedf855]:last-of-type:hover {
   margin-right: -3px !important;
   margin-left: -4px !important;
 }
 /*noinspection CssUnusedSymbol*/
-.rolling-number-input-single[data-v-2c692834] {
+.rolling-number-input-single[data-v-5dedf855] {
   border: 1px solid black;
   border-radius: 5px;
 }
 /*noinspection CssUnusedSymbol*/
-.rolling-number-input-left-two-digits[data-v-2c692834] {
+.rolling-number-input-left-two-digits[data-v-5dedf855] {
   border-right: 1px solid black !important;
   /*margin-right: -1px;*/
 }
 /*noinspection CssUnusedSymbol*/
-.rolling-number-input-left-two-digits[data-v-2c692834]:hover {
+.rolling-number-input-left-two-digits[data-v-5dedf855]:hover {
   margin-right: -3px;
   border-right: 4px #1867c0 solid !important;
 }
 /*noinspection CssUnusedSymbol*/
-.rolling-number-input-digit[data-v-2c692834] {
+.rolling-number-input-digit[data-v-5dedf855] {
   text-align: center;
   font-family: monospace;
   width: 1em;
   position: relative;
 }
 /*noinspection CssUnusedSymbol*/
-.rolling-number-input-left[data-v-2c692834]:hover {
+.rolling-number-input-left[data-v-5dedf855]:hover {
   margin-left: -3px !important;
   margin-right: -3px !important;
 }
 /*noinspection CssUnusedSymbol*/
-.rolling-number-input-right[data-v-2c692834]:hover {
+.rolling-number-input-right[data-v-5dedf855]:hover {
   margin-left: -3px !important;
   margin-right: -3px !important;
 }

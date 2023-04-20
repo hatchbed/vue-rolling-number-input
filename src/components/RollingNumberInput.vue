@@ -160,6 +160,20 @@ export default Vue.extend({
     async handleKey(event: KeyboardEvent, digit: number) {
       const currentValue = this.digits[digit]
       const value = parseInt(event.key)
+
+      // If the user presses "-" or "+", change the sign of the value regardless of where the
+      // cursor is.
+      if (event.key === '-' && this.allowNegative) {
+          this.internalValue = - Math.abs(this.internalValue)
+          event.preventDefault()
+          return
+      }
+      else if (event.key === '+') {
+          this.internalValue = Math.abs(this.internalValue)
+          event.preventDefault()
+          return
+      }
+
       if (currentValue === '.' || currentValue === '+' || currentValue === '-' || digit < 0 ||
           digit >= this.digits.length || parseInt(currentValue) === value) {
         // If the focus is on the sign or dot, or if the digit is out of bounds, or if the user typed
