@@ -88,7 +88,17 @@ const maxValue = computed(() => {
 
 const minValue = computed(() => {
     // If no min value is explicitly set, it is 0 if negative numbers are not allowed; otherwise, the inverse of the max
-    return props.min ? props.min : props.allowNegative ? -maxValue.value : 0
+    if (props.min) {
+        if (props.allowNegative) {
+            return props.min
+        }
+        return Math.max(props.min, 0)
+    }
+    // If no min is set, return the inverse of the max if negative numbers are allowed, otherwise 0.
+    if (props.allowNegative) {
+        return -maxValue.value
+    }
+    return 0
 })
 
 const wholeDigits = computed(() => {
@@ -142,14 +152,16 @@ const handleKey = async (event: KeyboardEvent, digit: number) => {
 
     // If the user presses "-" or "+", change the sign of the value regardless of where the
     // cursor is.
-    if (event.key === '-' && props.allowNegative) {
+    if (event.key === '-' && props.allowNegative ||
+        ((event.key === 'ArrowUp' || event.key === 'ArrowDown') && currentValue === '+')) {
         state.internalValue = -Math.abs(state.internalValue)
         if (props.min) {
             state.internalValue = Math.max(props.min, state.internalValue)
         }
         event.preventDefault()
         return
-    } else if (event.key === '+') {
+    } else if (event.key === '+' ||
+        ((event.key === 'ArrowUp' || event.key === 'ArrowDown') && currentValue === '-')) {
         state.internalValue = Math.abs(state.internalValue)
         if (props.max) {
             state.internalValue = Math.min(props.max, state.internalValue)
