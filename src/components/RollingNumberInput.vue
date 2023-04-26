@@ -106,8 +106,18 @@ export default Vue.extend({
       return this.max ? this.max : Math.pow(10, this.wholeDigits) - Math.pow(10, -this.precision)
     },
     minValue(): number {
-      // If no min value is explicitly set, it is 0 if negative numbers are not allowed; otherwise, the inverse of the max
-      return this.min ? this.min : this.allowNegative ? -this.maxValue : 0
+      // If a min value is explicitly set, return that, but don't let it go below zero if negative numbers aren't allowed.
+      if (this.min) {
+          if (this.allowNegative) {
+              return this.min
+          }
+          return Math.max(this.min, 0)
+      }
+      // If no min is set, return the inverse of the max if negative numbers are allowed, otherwise 0.
+      if (this.allowNegative) {
+          return -this.maxValue
+      }
+      return 0
     },
     wholeDigits(): number {
       // Count the number of digits we have for actually representing numbers
@@ -163,7 +173,8 @@ export default Vue.extend({
 
       // If the user presses "-" or "+", change the sign of the value regardless of where the
       // cursor is.
-      if (event.key === '-' && this.allowNegative) {
+      if (event.key === '-' && this.allowNegative ||
+          ((event.key === 'ArrowUp' || event.key === 'ArrowDown') && currentValue === '+')) {
           this.internalValue = - Math.abs(this.internalValue)
           if (this.min) {
               this.internalValue = Math.max(this.min, this.internalValue)
@@ -171,7 +182,8 @@ export default Vue.extend({
           event.preventDefault()
           return
       }
-      else if (event.key === '+') {
+      else if (event.key === '+' ||
+          ((event.key === 'ArrowUp' || event.key === 'ArrowDown') && currentValue === '-')) {
           this.internalValue = Math.abs(this.internalValue)
           if (this.max) {
               this.internalValue = Math.min(this.max, this.internalValue)
