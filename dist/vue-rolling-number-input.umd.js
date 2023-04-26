@@ -107,7 +107,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js??clonedRuleSet-85.use[0]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=template&id=5dedf855&scoped=true&
+;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js??clonedRuleSet-85.use[0]!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[4]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=template&id=ef2e0682&scoped=true&
 var render = function render() {
   var _vm = this,
       _c = _vm._self._c,
@@ -244,8 +244,21 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
     },
 
     minValue() {
-      // If no min value is explicitly set, it is 0 if negative numbers are not allowed; otherwise, the inverse of the max
-      return this.min ? this.min : this.allowNegative ? -this.maxValue : 0;
+      // If a min value is explicitly set, return that, but don't let it go below zero if negative numbers aren't allowed.
+      if (this.min) {
+        if (this.allowNegative) {
+          return this.min;
+        }
+
+        return Math.max(this.min, 0);
+      } // If no min is set, return the inverse of the max if negative numbers are allowed, otherwise 0.
+
+
+      if (this.allowNegative) {
+        return -this.maxValue;
+      }
+
+      return 0;
     },
 
     wholeDigits() {
@@ -311,12 +324,22 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
       const value = parseInt(event.key); // If the user presses "-" or "+", change the sign of the value regardless of where the
       // cursor is.
 
-      if (event.key === '-' && this.allowNegative) {
+      if (event.key === '-' && this.allowNegative || (event.key === 'ArrowUp' || event.key === 'ArrowDown') && currentValue === '+') {
         this.internalValue = -Math.abs(this.internalValue);
+
+        if (this.min) {
+          this.internalValue = Math.max(this.min, this.internalValue);
+        }
+
         event.preventDefault();
         return;
-      } else if (event.key === '+') {
+      } else if (event.key === '+' || (event.key === 'ArrowUp' || event.key === 'ArrowDown') && currentValue === '-') {
         this.internalValue = Math.abs(this.internalValue);
+
+        if (this.max) {
+          this.internalValue = Math.min(this.max, this.internalValue);
+        }
+
         event.preventDefault();
         return;
       }
@@ -440,10 +463,10 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 }));
 ;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=script&lang=ts&
  /* harmony default export */ var components_RollingNumberInputvue_type_script_lang_ts_ = (RollingNumberInputvue_type_script_lang_ts_); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-57.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-57.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-57.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=5dedf855&prod&scoped=true&lang=css&
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-57.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-57.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-57.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=ef2e0682&prod&scoped=true&lang=css&
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=5dedf855&prod&scoped=true&lang=css&
+;// CONCATENATED MODULE: ./src/components/RollingNumberInput.vue?vue&type=style&index=0&id=ef2e0682&prod&scoped=true&lang=css&
 
 ;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -558,7 +581,7 @@ var component = normalizeComponent(
   staticRenderFns,
   false,
   null,
-  "5dedf855",
+  "ef2e0682",
   null
   
 )
