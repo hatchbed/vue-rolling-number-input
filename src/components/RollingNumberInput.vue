@@ -54,6 +54,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
     (e: 'input', value: number): void
     (e: 'change', value: number): void
+    (e: 'update:modelValue', value: number): void
 }>()
 
 const state = reactive({internalValue: props.modelValue})
@@ -122,6 +123,7 @@ watch(() => state.internalValue, (newVal, oldVal) => {
     if (newVal !== oldVal) {
         emit('input', newVal)
         emit('change', newVal)
+        emit('update:modelValue', newVal)
     }
 })
 
