@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineEmits, defineProps, reactive, ref, watch, withDefaults} from 'vue'
+import {computed, reactive, ref, watch, withDefaults} from 'vue'
 
 const props = withDefaults(defineProps<{
     allowNegative?: boolean

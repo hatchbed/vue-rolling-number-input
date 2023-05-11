@@ -1,6 +1,6 @@
 {
   "name": "vue3-rolling-number-input",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "A Vue 3 number input component that allows using the mouse wheel to adjust individual digits.",
   "author": "P. J. Reed <phillipreed@hatchbed.com>",
   "homepage": "https://github.com/hatchbed/vue-rolling-number-input",
@@ -45,20 +45,19 @@
     "wheel"
   ],
   "dependencies": {
-    "core-js": "^3.30.1",
-    "vue": "^3.2.47"
+    "core-js": "^3.30.2",
+    "vue": "^3.3.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "@vitejs/plugin-vue": "^4.1.0",
-    "@vue/eslint-config-typescript": "^9.1.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.5.0",
-    "typescript": "~4.5.5",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "eslint": "^8.40.0",
+    "eslint-plugin-vue": "^9.12.0",
+    "typescript": "^5.0.4",
     "vite": "^4.2.2",
-    "vite-plugin-dts": "^2.3.0",
-    "vue-template-compiler": "^2.7.14"
+    "vite-plugin-dts": "^2.3.0"
   },
   "eslintConfig": {
     "root": true,
